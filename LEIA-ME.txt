@@ -1,0 +1,44 @@
+IT SUPPORT TOOLKIT V2
+====================
+
+Ferramenta gratuita de diagnóstico e manutenção controlada para Windows 10/11.
+
+INÍCIO RÁPIDO
+1. Extraia a pasta em um local permanente.
+2. Abra PowerShell.
+3. Execute:
+   Set-ExecutionPolicy -Scope Process RemoteSigned
+   .\ITSupportToolkit.ps1 -Mode Audit
+4. Consulte o relatório em:
+   %LOCALAPPDATA%\ITSupportToolkit\NOME-DO-PC\
+
+MODOS
+- Audit: diagnóstico somente leitura e relatório HTML.
+- Repair: executa apenas as ações explicitamente selecionadas.
+- InstallWeekly: agenda auditoria semanal às segundas-feiras, 08:00.
+- UninstallWeekly: remove a tarefa semanal.
+
+EXEMPLOS DE REPARO (PowerShell como Administrador)
+- Cache DNS: .\ITSupportToolkit.ps1 -Mode Repair -FlushDns
+- Temporários antigos: .\ITSupportToolkit.ps1 -Mode Repair -CleanTemp -TempFileAgeDays 7
+- Spooler: .\ITSupportToolkit.ps1 -Mode Repair -RestartSpooler
+- DISM/SFC: .\ITSupportToolkit.ps1 -Mode Repair -RunDISM -RunSFC
+- Ponto de restauração: .\ITSupportToolkit.ps1 -Mode Repair -CreateRestorePoint
+
+SEGURANÇA
+O modo Audit não altera o computador. A limpeza opcional atua somente em pastas
+Temp do Windows e do usuário atual, removendo arquivos antigos; arquivos em uso
+são ignorados. Não são tocadas senhas, histórico de navegação, documentos,
+fotos, Downloads ou permissões de privacidade. A fila de impressão não é apagada.
+A tarefa semanal executa somente auditoria.
+
+IMPORTANTE
+Ponto de restauração depende da Proteção do Sistema e pode não estar disponível.
+O backup criado é de inventários/configurações selecionadas, não imagem completa.
+Revise o HTML antes de anexá-lo a chamados: pode conter dados internos.
+Teste em laboratório antes de usar em produção.
+Consulte README.md para requisitos, limitações, segurança e roadmap.
+
+CODIFICAÇÃO
+O script utiliza UTF-8 com BOM para preservar acentos no Windows PowerShell 5.1.
+O relatório HTML declara UTF-8 para exibição correta no navegador.
