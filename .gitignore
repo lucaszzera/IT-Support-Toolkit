@@ -1,0 +1,6 @@
+*.html
+*.log
+Backups/
+Reports/
+.DS_Store
+Thumbs.db
